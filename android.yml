@@ -1,0 +1,22 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main" ] # Ana dalınız 'main' olduğu için burası doğru
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Buildozer
+      uses: styfle/buildozer-action@v2
+      with:
+        version: latest
+    - name: Build and Deploy
+      run: |
+        buildozer android debug
+    - uses: actions/upload-artifact@v4
+      with:
+        name: Kivy-APK
+        path: bin/*.apk
